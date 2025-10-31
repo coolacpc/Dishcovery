@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dishcovery: Local Chef Finder</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f9;
+        }
+        /* Custom scrollbar styling for the results container */
+        .results-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .results-container::-webkit-scrollbar-thumb {
+            background-color: #D1D5DB;
+            border-radius: 3px;
+        }
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 flex justify-center">
+
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-2xl p-6 md:p-8">
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-1 flex items-center">
+                <svg class="w-7 h-7 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 14a6 6 0 110-12 6 6 0 010 12zm-1-7H7a1 1 0 000 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7a1 1 0 10-2 0v2z" clip-rule="evenodd"></path></svg>
+                Dishcovery
+            </h1>
+            <p class="text-gray-500 text-sm">Find local chefs specializing in your favorite dishes, powered by reviews.</p>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input type="text" id="dishSearch" oninput="searchDishes()" placeholder="Search for a dish (e.g., Thai Green Curry, Beef Wellington)" 
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 shadow-sm">
+        </div>
+        
+        <!-- User ID Display (Required for multi-user apps) -->
+        <div class="text-xs text-gray-500 mb-4 p-2 bg-gray-100 rounded-lg">
+            User ID: <span id="userIdDisplay" class="font-mono text-indigo-700">Loading...</span>
+        </div>
+
+        <!-- Results Display -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Local Chef Results</h3>
+        <div id="resultsContainer" class="results-container space-y-4 max-h-96 overflow-y-auto pr-2">
+            <!-- Chef cards will be injected here by JavaScript -->
+            <p id="loadingMessage" class="text-center text-gray-500">Search above to find local specialties...</p>
+        </div>
+
+        <!-- System Message Box (for alerts/errors) -->
+        <div id="messageBox" class="mt-6 hidden p-3 text-sm rounded-lg border" role="alert"></div>
+    </div>
+
+    <!-- Firebase Imports and Setup -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setDoc, doc, collection, onSnapshot, getDoc, connectFirestoreEmulator, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+
+        // Function to handle system messages (instead of alert)
+        function showMessage(text, isError = false) {
+            const box = document.getElementById('messageBox');
+            box.textContent = text;
+            box.className = `mt-6 p-3 text-sm rounded-lg border ${isError ? 'bg-red-100 border-red-400 text-red-700' : 'bg-green-100 border-green-400 text-green-700'}`;
+            box.style.display = 'block';
+            setTimeout(() => { box.style.display = 'none'; }, 5000);
+        }
+
+        async function initializeFirebase() {
+            if (!firebaseConfig) {
+                console.error("Firebase config is missing. Proceeding with mock data only.");
+                return;
+            }
+
+            try {
+                // Initialize Firebase services
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('Debug'); // Enable Firestore logging
+
+                // 1. Authenticate the user
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+
+                // 2. Set up Auth State Listener
+                onAuthStateChanged(auth, (user) => {
+                    const userId = user?.uid || 'anonymous-' + crypto.randomUUID();
+                    window.globalUserId = userId; // Make userId available globally
+                    document.getElementById('userIdDisplay').textContent = userId;
+                    console.log("Auth state changed. User ID set:", userId);
+                    
+                    // Once authenticated, attempt to fetch real data (simulated below)
+                    // fetchChefData(userId);
+                });
+                
+            } catch (error) {
+                console.error("Firebase initialization or authentication failed:", error);
+                showMessage(`Error initializing app: ${error.message}`, true);
+            }
+        }
+
+        // Initialize Firebase on load
+        initializeFirebase();
+
+        // The global variables needed by the main script block
+        window.showMessage = showMessage;
+        window.appId = appId;
+    </script>
+    
+    <!-- Main Application Logic (Must be placed after the Firebase module script) -->
+    <script>
+        // --- Mock Data (Now includes menu items for ordering) ---
+        const MOCK_CHEFS = [
+            { id: 1, name: "Chef Alice", dish: "Authentic Thai Green Curry", rating: 4.8, distance: 1.2, specialty: "Thai", menu: [
+                { name: "Authentic Thai Green Curry", price: 14.99, description: "Classic mild coconut curry with bamboo shoots and bell peppers." },
+                { name: "Pad See Ew (Wide Noodle)", price: 12.50, description: "Wide rice noodles stir-fried in dark soy sauce and Chinese broccoli." },
+            ]},
+            { id: 2, name: "Chef Bob", dish: "Classic Beef Wellington", rating: 4.2, distance: 3.5, specialty: "French", menu: [
+                { name: "Classic Beef Wellington (Individual)", price: 35.00, description: "Filet mignon coated in duxelles, wrapped in prosciutto and puff pastry." },
+                { name: "Tarte Tatin", price: 9.50, description: "Caramelized apple tart, served upside down." },
+            ]},
+            { id: 3, name: "Chef Carol", dish: "Spicy Dan Dan Noodles", rating: 4.9, distance: 0.5, specialty: "Sichuan", menu: [
+                { name: "Spicy Dan Dan Noodles", price: 13.00, description: "Ground pork, preserved vegetables, chili oil, and Sichuan peppercorns." },
+                { name: "Ma Po Tofu", price: 15.50, description: "Silken tofu in a spicy bean sauce with minced beef." },
+            ]},
+            { id: 4, name: "Chef David", dish: "Thai Basil Chicken (Pad Krapow)", rating: 4.5, distance: 2.1, specialty: "Thai", menu: [
+                { name: "Thai Basil Chicken (Pad Krapow)", price: 13.99, description: "Stir-fried chicken with holy basil, chilies, and garlic." },
+                { name: "Pineapple Fried Rice", price: 11.00, description: "Curry-seasoned rice with chicken, raisins, and cashews, served in a pineapple." },
+            ]},
+            { id: 5, name: "Chef Eva", dish: "Classic Beef Wellington", rating: 3.9, distance: 5.0, specialty: "British", menu: [
+                { name: "Classic Beef Wellington (Family Size)", price: 90.00, description: "A large wellington suitable for 4-6 people." },
+            ]},
+        ];
+
+        let currentChefs = [...MOCK_CHEFS];
+        
+        /**
+         * Generates the HTML for the Chef Rating Pill, implementing the conditional style.
+         */
+        function createRatingPill(rating) {
+            const formattedRating = rating.toFixed(1);
+            const isExcellent = rating > 4.5;
+            const bgColorClass = isExcellent ? 'bg-amber-500' : 'bg-gray-600'; // Gold or Dark Grey
+
+            return `
+                <div class="flex items-center space-x-1 px-2 py-1 rounded-full text-white font-bold text-sm ${bgColorClass} shadow-md">
+                    <span class="text-xs">★</span>
+                    <span>${formattedRating}</span>
+                </div>
+            `;
+        }
+        
+        /**
+         * Generates the HTML for a single menu item with an Order button.
+         */
+        function createMenuItemHTML(chefName, item) {
+            return `
+                <div class="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0">
+                    <div class="flex-grow pr-4">
+                        <p class="font-medium text-gray-800">${item.name} <span class="text-indigo-600 font-bold ml-2">$${item.price.toFixed(2)}</span></p>
+                        <p class="text-xs text-gray-500 mt-1">${item.description}</p>
+                    </div>
+                    <button onclick="orderDish('${chefName}', '${item.name}')" 
+                            class="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-semibold py-1.5 px-3 rounded-full transition duration-150 shadow-md flex-shrink-0">
+                        Order
+                    </button>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the list of chefs to the results container, sorted by rating.
+         */
+        function renderChefs(chefs) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = ''; // Clear previous results
+
+            if (chefs.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 p-4">No local chefs found for this dish or specialty.</p>';
+                return;
+            }
+
+            // Workflow Step 3: Sort results by rating (highest first)
+            chefs.sort((a, b) => b.rating - a.rating);
+
+            chefs.forEach(chef => {
+                const chefContainer = document.createElement('div');
+                chefContainer.className = 'bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden';
+
+                // --- Collapsible Header (The main card) ---
+                const header = document.createElement('div');
+                header.className = 'chef-card flex items-center justify-between p-4 hover:bg-indigo-50 transition duration-150 cursor-pointer';
+                header.onclick = () => toggleChefMenu(chef.id);
+                
+                // Collect menu HTML
+                const menuItemsHTML = chef.menu.map(item => createMenuItemHTML(chef.name, item)).join('');
+
+                header.innerHTML = `
+                    <!-- Chef Details -->
+                    <div class="flex-grow min-w-0">
+                        <p class="text-lg font-semibold text-gray-800 truncate">${chef.name}</p>
+                        <p class="text-sm text-indigo-600 font-medium">${chef.dish}</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <span class="mr-3">${chef.distance.toFixed(1)} mi away</span> 
+                            <span class="font-medium text-gray-600">${chef.specialty}</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Right side: Rating Pill and Toggle Arrow -->
+                    <div class="ml-4 flex-shrink-0 flex items-center space-x-3">
+                        ${createRatingPill(chef.rating)}
+                        <!-- Arrow Icon -->
+                        <svg id="arrow-${chef.id}" class="w-5 h-5 text-gray-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                `;
+                
+                // --- Menu Content (Hidden by default) ---
+                const menuContent = document.createElement('div');
+                menuContent.id = `menu-content-${chef.id}`;
+                menuContent.className = 'p-4 bg-white border-t border-gray-200 hidden';
+                menuContent.innerHTML = `
+                    <p class="text-sm font-bold text-gray-700 mb-2">Full Menu:</p>
+                    ${menuItemsHTML}
+                `;
+
+                chefContainer.appendChild(header);
+                chefContainer.appendChild(menuContent);
+                container.appendChild(chefContainer);
+            });
+        }
+
+        /**
+         * Toggles the visibility of a chef's menu and rotates the arrow icon.
+         */
+        function toggleChefMenu(chefId) {
+            const menu = document.getElementById(`menu-content-${chefId}`);
+            const arrow = document.getElementById(`arrow-${chefId}`);
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                arrow.classList.add('rotate-90');
+            } else {
+                menu.classList.add('hidden');
+                arrow.classList.remove('rotate-90');
+            }
+        }
+        
+        /**
+         * Simulates the ordering process.
+         */
+        function orderDish(chefName, dishName) {
+            // This is Workflow Step 6/7: Order Initiation and Confirmation
+            showMessage(`Order Placed: 1x ${dishName} from ${chefName}. Chef notified and preparing!`);
+        }
+
+        /**
+         * Filters the chef list based on user search input. (Workflow Step 1)
+         */
+        function searchDishes() {
+            const query = document.getElementById('dishSearch').value.toLowerCase().trim();
+            // REMOVED: document.getElementById('loadingMessage').style.display = 'none'; // This element is removed by renderChefs, causing the error.
+
+            if (query.length < 2) {
+                // If query is too short, show all chefs, sorted
+                currentChefs = [...MOCK_CHEFS];
+            } else {
+                // Filter chefs based on: Primary Dish, Specialty, or ANY Menu Item Name
+                currentChefs = MOCK_CHEFS.filter(chef => {
+                    const dishMatch = chef.dish.toLowerCase().includes(query);
+                    const specialtyMatch = chef.specialty.toLowerCase().includes(query);
+                    const menuItemMatch = chef.menu.some(item => item.name.toLowerCase().includes(query));
+                    return dishMatch || specialtyMatch || menuItemMatch;
+                });
+            }
+
+            renderChefs(currentChefs);
+        }
+        
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChefs(MOCK_CHEFS);
+            document.getElementById('dishSearch').focus();
+        });
+
+        // Expose functions globally for HTML elements to access
+        window.searchDishes = searchDishes;
+        window.toggleChefMenu = toggleChefMenu;
+        window.orderDish = orderDish;
+    </script>
+</body>
+</html>
