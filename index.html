@@ -89,12 +89,15 @@
                             <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-2.5 rounded-lg text-sm">Invalid credentials. Please try again.</div>
                             <button type="submit" onclick="handleLogin()" class="w-full btn-primary text-white py-2.5 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition">Sign In</button>
                         </form>
-                        <div class="mt-6 flex items-center justify-center">
-                            <button onclick="toggleDemoAccounts()" class="p-2 hover:bg-gray-100 rounded-full transition" title="Show demo accounts">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                </svg>
-                            </button>
+                        <div class="mt-6">
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="text-xs text-gray-500 text-center mb-2">Click the icon below to view demo accounts</p>
+                                <button onclick="toggleDemoAccounts()" class="p-2 hover:bg-gray-100 rounded-full transition" title="Show demo accounts">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div id="demo-accounts" class="mt-4 pt-4 border-t border-gray-200 hidden">
                             <p class="text-xs text-gray-500 text-center mb-3">Demo Accounts</p>
