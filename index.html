@@ -270,7 +270,7 @@
                 </div>
             </div>
             <div class="fixed bottom-16 left-0 right-0 max-w-md mx-auto bg-white border-t p-4 z-20">
-                <button id="add-to-cart-btn" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">Add to Cart - $12.99</button>
+                <button id="add-to-cart-btn" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">Add to Cart - JOD 12.99</button>
             </div>
             <div class="h-32"></div>
             
@@ -504,7 +504,7 @@
                     </div>
                     <div class="flex justify-between mb-2">
                         <span>Delivery</span>
-                        <span>$2.50</span>
+                        <span>JOD 2.50</span>
                     </div>
                     <div class="flex justify-between font-bold text-lg pt-2 border-t">
                         <span>Total</span>
@@ -577,11 +577,11 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">Total Paid</span>
-                            <span class="font-semibold">$15.49</span>
+                            <span class="font-semibold">JOD 15.49</span>
                         </div>
                     </div>
                 </div>
-                <button onclick="showScreen('home-screen')" class="w-full btn-primary text-white py-3 rounded-lg font-semibold mb-3">Track Order</button>
+                <button onclick="if(lastOrderId) { trackOrder(lastOrderId); } else { showScreen('home-screen'); }" class="w-full btn-primary text-white py-3 rounded-lg font-semibold mb-3">Track Order</button>
                 <button onclick="showScreen('home-screen')" class="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold mb-20">Back to Home</button>
             </div>
             
@@ -1896,6 +1896,7 @@
         let currentMasterclassId = null;
         let currentChefId = null;
         let currentChefTab = 'orders';
+        let lastOrderId = null;
         
         // Saved Cards Functions
         function loadSavedCards() {
@@ -3465,6 +3466,10 @@
             }
             
             saveBookingsToStorage();
+            
+            // Store the order ID for tracking
+            lastOrderId = orderId;
+            
             const confirmation = document.getElementById('order-confirmation');
             if (confirmation) {
                 const orderNumberEl = confirmation.querySelector('.text-2xl.font-bold');
@@ -3476,9 +3481,12 @@
             
             cart = [];
             selectedPaymentMethod = 'cash';
-            document.getElementById('payment-cash').checked = true;
-            document.getElementById('payment-visa').checked = false;
-            document.getElementById('delivery-location').value = '';
+            const cashRadio = document.getElementById('payment-cash');
+            if (cashRadio) cashRadio.checked = true;
+            const visaRadio = document.getElementById('payment-visa');
+            if (visaRadio) visaRadio.checked = false;
+            const deliveryLocation = document.getElementById('delivery-location');
+            if (deliveryLocation) deliveryLocation.value = '';
             showScreen('order-confirmation');
         }
 
@@ -5097,71 +5105,106 @@
             container.innerHTML = `
                 <div class="mb-6 flex items-center justify-between">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-800">All Dishes</h2>
-                        <p class="text-sm text-gray-500 mt-1">Manage dishes and their ingredients</p>
+                        <h2 class="text-xl font-semibold text-gray-900">All Dishes</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">${dishes.all.length} dishes</p>
                     </div>
-                    <button onclick="showAddDishModalAdmin()" class="btn-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button onclick="showAddDishModalAdmin()" class="btn-primary text-white px-4 py-2 rounded-lg font-medium text-sm shadow-sm hover:shadow transition-all flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Add New Dish
+                        Add Dish
                     </button>
                 </div>
-                <div class="space-y-4">
-                    ${dishes.all.map(dish => {
-                        const addCount = (dish.customIngredients?.add || []).length;
-                        const removeCount = (dish.customIngredients?.remove || []).length;
-                        return `
-                        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-5 border border-gray-100">
-                            <div class="flex items-start justify-between">
-                                <div class="flex-1">
-                                    <div class="flex items-start gap-4">
-                                        <img src="${dish.image}" class="w-24 h-24 rounded-xl object-cover shadow-sm">
-                                        <div class="flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <h3 class="font-bold text-lg text-gray-800">${dish.name}</h3>
-                                                <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full">${dish.category.replace('-', ' ')}</span>
+                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Dish</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Chef</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rating</th>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Customizations</th>
+                                    <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-100">
+                                ${dishes.all.map((dish, index) => {
+                                    const addCount = (dish.customIngredients?.add || []).length;
+                                    const removeCount = (dish.customIngredients?.remove || []).length;
+                                    return `
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                                                    <img src="${dish.image}" class="w-full h-full object-cover" alt="${dish.name}">
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="font-medium text-sm text-gray-900 truncate">${dish.name}</div>
+                                                </div>
                                             </div>
-                                            <p class="text-sm text-gray-600 mb-2">${dish.chef}</p>
-                                            <div class="flex items-center gap-4 text-sm mb-3">
-                                                <span class="text-red-600 font-bold text-base">${dish.price}</span>
-                                                <span class="text-yellow-500 flex items-center gap-1">★ ${dish.rating}</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="text-sm text-gray-600">${dish.chef}</div>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-50 text-red-700 capitalize">${dish.category.replace('-', ' ')}</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="text-sm font-semibold text-gray-900">${dish.price}</div>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                                </svg>
+                                                <span class="text-sm text-gray-700 font-medium">${dish.rating}</span>
                                             </div>
-                                            <div class="flex items-center gap-3 text-xs">
-                                                <div class="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 rounded-full">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center gap-1.5 flex-wrap">
+                                                ${addCount > 0 ? `
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                                     </svg>
-                                                    <span class="font-medium">${addCount} add</span>
-                                                </div>
-                                                <div class="flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 rounded-full">
+                                                    ${addCount}
+                                                </span>
+                                                ` : ''}
+                                                ${removeCount > 0 ? `
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
                                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                                                     </svg>
-                                                    <span class="font-medium">${removeCount} remove</span>
-                                                </div>
+                                                    ${removeCount}
+                                                </span>
+                                                ` : ''}
+                                                ${addCount === 0 && removeCount === 0 ? `
+                                                <span class="text-xs text-gray-400">—</span>
+                                                ` : ''}
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex gap-2 ml-4">
-                                    <button onclick="editDishAdmin(${dish.id})" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg font-semibold transition-colors shadow-sm flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                        </svg>
-                                        Edit
-                                    </button>
-                                    <button onclick="deleteDishAdmin(${dish.id})" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg font-semibold transition-colors shadow-sm flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    }).join('')}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-end gap-1.5">
+                                                <button onclick="editDishAdmin(${dish.id})" class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Edit">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                </button>
+                                                <button onclick="deleteDishAdmin(${dish.id})" class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Delete">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             `;
         }
