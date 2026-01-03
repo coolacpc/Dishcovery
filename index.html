@@ -713,6 +713,59 @@
             </div>
         </div>
 
+        <!-- CHEF BOOKINGS SCREEN -->
+        <div id="chef-bookings-screen" class="screen">
+            <div class="bg-white border-b sticky top-0 z-10">
+                <div class="px-4 py-4 flex items-center">
+                    <button onclick="goBack()" class="mr-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-bold">My Bookings</h1>
+                </div>
+            </div>
+            <div class="p-4 pb-20">
+                <div id="chef-bookings-list" class="space-y-4">
+                    <!-- Chef bookings will be dynamically added here -->
+                </div>
+            </div>
+            <div id="bottom-tabs" class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-200 z-50">
+                <div class="flex items-center justify-around py-2">
+                    <button onclick="navigateToTab('home')" id="tab-home" class="flex flex-col items-center justify-center px-4 py-2 flex-1">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span class="text-xs">Home</span>
+                    </button>
+                    <button onclick="navigateToTab('favorites')" id="tab-favorites" class="flex flex-col items-center justify-center px-4 py-2 flex-1 relative">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <span class="text-xs">Favorites</span>
+                    </button>
+                    <button onclick="navigateToTab('bookings')" id="tab-bookings" class="flex flex-col items-center justify-center px-4 py-2 flex-1 active-tab">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="text-xs">Bookings</span>
+                    </button>
+                    <button onclick="navigateToTab('orders')" id="tab-orders" class="flex flex-col items-center justify-center px-4 py-2 flex-1">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <span class="text-xs">Orders</span>
+                    </button>
+                    <button onclick="navigateToTab('profile')" id="tab-profile" class="flex flex-col items-center justify-center px-4 py-2 flex-1">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span class="text-xs">Profile</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- CHEF PROFILE -->
         <div id="chef-profile" class="screen">
             <div class="bg-white border-b sticky top-0 z-10">
@@ -1284,14 +1337,12 @@
                     </div>
                     <div class="flex space-x-2 border-b">
                         <button onclick="showChefTab('orders')" id="chef-tab-orders" class="flex-1 px-4 py-2 text-sm font-semibold border-b-2 border-red-600 text-red-600">Orders</button>
-                        <button onclick="showChefTab('bookings')" id="chef-tab-bookings" class="flex-1 px-4 py-2 text-sm font-semibold text-gray-500 border-b-2 border-transparent">Bookings</button>
                         <button onclick="showChefTab('menu')" id="chef-tab-menu" class="flex-1 px-4 py-2 text-sm font-semibold text-gray-500 border-b-2 border-transparent">Menu</button>
                         <button onclick="showChefTab('analytics')" id="chef-tab-analytics" class="flex-1 px-4 py-2 text-sm font-semibold text-gray-500 border-b-2 border-transparent">Analytics</button>
                     </div>
                 </div>
             </div>
             <div id="orders-container" class="p-4"></div>
-            <div id="bookings-container" class="p-4 hidden"></div>
             <div id="menu-container" class="p-4 hidden">
                 <div class="mb-4">
                     <button onclick="showAddDishModal()" class="btn-primary text-white px-4 py-2 rounded-lg font-semibold text-sm">+ Add New Dish</button>
@@ -1485,7 +1536,7 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto flex-1 px-6 py-4">
-                        <form id="dish-form" onsubmit="event.preventDefault(); if(currentEditingDishId) { updateDishAdmin(currentEditingDishId); } else { saveNewDishAdmin(); }" class="space-y-5">
+                        <form id="dish-form" onsubmit="event.preventDefault(); handleDishFormSubmit();" class="space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Dish Name *</label>
@@ -1569,7 +1620,7 @@
                 </div>
                 <div class="flex gap-3 p-6 border-t border-gray-200 flex-shrink-0">
                     <button type="button" onclick="closeAddDishModal()" class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition-colors">Cancel</button>
-                    <button type="button" onclick="if(currentEditingDishId) { updateDishAdmin(currentEditingDishId); } else { saveNewDishAdmin(); }" id="dish-modal-submit" class="flex-1 btn-primary text-white py-3 rounded-lg font-semibold">Add Dish</button>
+                    <button type="button" onclick="handleDishFormSubmit();" id="dish-modal-submit" class="flex-1 btn-primary text-white py-3 rounded-lg font-semibold">Add Dish</button>
                 </div>
             </div>
         </div>
@@ -1684,7 +1735,7 @@
             all: [
                 {id: 1, name: 'Traditional Mansaf', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 9.50', rating: '4.8', image: 'mansaf.jpg', category: 'middle-eastern', customIngredients: { add: [{ name: 'Extra Rice', price: 0.75 }, { name: 'Extra Meat', price: 1.00 }, { name: 'Yogurt', price: 0.50 }], remove: ['Onions', 'Garlic'] }},
                 {id: 2, name: 'Sweet Kunafa', chef: "Ahmad's Sweets", chefId: 'ahmad', price: 'JOD 4.50', rating: '5.0', image: 'kunafa.jpg', category: 'desserts'},
-                {id: 3, name: 'Dolma', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 4.50', rating: '4.7', image: 'dolma.jpg', category: 'middle-eastern', customIngredients: { add: [], remove: [] }},
+                {id: 3, name: 'Mahashi', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 4.50', rating: '4.7', image: 'dolma.jpg', category: 'middle-eastern', customIngredients: { add: [], remove: [] }},
                 {id: 4, name: 'Galaye', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 7.50', rating: '4.9', image: 'galaye.jpg', category: 'middle-eastern', customIngredients: { add: [], remove: [] }},
                 {id: 16, name: 'Kusa', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 6.00', rating: '4.8', image: 'kusa.jpg', category: 'middle-eastern', customIngredients: { add: [], remove: [] }},
                 {id: 5, name: 'Margherita Pizza', chef: "Chef Omar's Italian", chefId: 'omar', price: 'JOD 8.50', rating: '4.8', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80&fit=crop', category: 'italian', customIngredients: { add: [{ name: 'Extra Cheese', price: 0.75 }, { name: 'Pepperoni', price: 1.00 }, { name: 'Mushrooms', price: 0.60 }], remove: ['Onions'] }},
@@ -1700,7 +1751,7 @@
             ],
             'middle-eastern': [
                 {id: 1, name: 'Traditional Mansaf', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 9.50', rating: '4.8', image: 'mansaf.jpg', category: 'middle-eastern'},
-                {id: 3, name: 'Dolma', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 4.50', rating: '4.7', image: 'dolma.jpg', category: 'middle-eastern'},
+                {id: 3, name: 'Mahashi', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 4.50', rating: '4.7', image: 'dolma.jpg', category: 'middle-eastern'},
                 {id: 4, name: 'Galaye', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 7.50', rating: '4.9', image: 'galaye.jpg', category: 'middle-eastern'},
                 {id: 11, name: 'Kabseh', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 9.00', rating: '4.9', image: 'kabseh.jpg', category: 'middle-eastern'},
                 {id: 12, name: 'Mandi', chef: "Chef Layla's Kitchen", chefId: 'layla', price: 'JOD 10.50', rating: '4.8', image: 'mandi.jpg', category: 'middle-eastern'},
@@ -1828,7 +1879,7 @@
                 id: 'mc1',
                 chefId: 'layla',
                 title: 'Authentic Middle Eastern Cooking',
-                description: 'Learn to prepare traditional Middle Eastern dishes including Mansaf, Dolma, and more. Hands-on experience with authentic techniques.',
+                description: 'Learn to prepare traditional Middle Eastern dishes including Mansaf, Mahashi, and more. Hands-on experience with authentic techniques.',
                 duration: '3 hours',
                 price: 'JOD 75',
                 rating: '4.9',
@@ -2146,9 +2197,11 @@
             localStorage.setItem('myBookings', JSON.stringify(myBookings));
             localStorage.setItem('allChefBookings', JSON.stringify(allChefBookings));
             localStorage.setItem('myOrders', JSON.stringify(myOrders));
+            localStorage.setItem('orders', JSON.stringify(orders));
         }
 
-        const orders = [
+        // Initialize orders array - will be loaded from localStorage if available
+        let orders = [
             {id: 'DH-2847', customer: 'Noor A.', dish: 'Traditional Mansaf x2', total: 'JOD 28.48', status: 'pending', time: '5 min ago', date: new Date().toLocaleDateString()},
             {id: 'DH-2846', customer: 'Sarah M.', dish: 'Sweet Kunafa', total: 'JOD 10.50', status: 'preparing', time: '15 min ago', date: new Date().toLocaleDateString()},
             {id: 'DH-2845', customer: 'Ahmed K.', dish: 'Hummus & Pita, Shawarma Plate', total: 'JOD 20.99', status: 'pending', time: '25 min ago', date: new Date().toLocaleDateString()},
@@ -2160,6 +2213,19 @@
             {id: 'DH-2839', customer: 'Khalid R.', dish: 'Chicken Teriyaki, Baklava', total: 'JOD 20.99', status: 'done', time: '5 hours ago', date: new Date().toLocaleDateString()},
             {id: 'DH-2838', customer: 'Sara N.', dish: 'Mandi', total: 'JOD 17.00', status: 'done', time: '6 hours ago', date: new Date().toLocaleDateString()}
         ];
+        
+        // Load orders from localStorage if available
+        const savedOrdersArray = localStorage.getItem('orders');
+        if (savedOrdersArray) {
+            try {
+                const parsedOrders = JSON.parse(savedOrdersArray);
+                if (Array.isArray(parsedOrders) && parsedOrders.length > 0) {
+                    orders = parsedOrders;
+                }
+            } catch (e) {
+                // Keep default orders if parsing fails
+            }
+        }
 
         let currentScreen = 'login-screen';
         let previousScreen = 'login-screen';
@@ -2437,7 +2503,7 @@
                         </div>
                         <div class="flex justify-between items-center pt-3 mt-3 border-t">
                             <span class="text-xs text-gray-500">Booking ID: ${booking.id}</span>
-                            <span class="font-bold text-lg text-red-600">${booking.price}</span>
+                            <span class="font-bold text-lg text-red-600">${formatPriceToJOD(booking.price)}</span>
                         </div>
                         ${booking.status === 'confirmed' || booking.status === 'pending' ? `
                             <div class="flex gap-2 mt-3 pt-3 border-t">
@@ -2613,10 +2679,10 @@
         function showChefTab(tab) {
             currentChefTab = tab;
             
-            // Reset all tabs
-            ['orders', 'bookings', 'menu', 'analytics'].forEach(t => {
+            // Reset all tabs (only orders, menu, analytics now - bookings removed)
+            ['orders', 'menu', 'analytics'].forEach(t => {
                 const tabBtn = document.getElementById(`chef-tab-${t}`);
-                const container = document.getElementById(`${t === 'orders' ? 'orders' : t === 'bookings' ? 'bookings' : t === 'menu' ? 'menu' : 'analytics'}-container`);
+                const container = document.getElementById(`${t === 'orders' ? 'orders' : t === 'menu' ? 'menu' : 'analytics'}-container`);
                 if (tabBtn) {
                     tabBtn.classList.remove('border-red-600', 'text-red-600');
                     tabBtn.classList.add('border-transparent', 'text-gray-500');
@@ -2628,7 +2694,7 @@
             
             // Activate selected tab
             const activeTabBtn = document.getElementById(`chef-tab-${tab}`);
-            const activeContainer = document.getElementById(`${tab === 'orders' ? 'orders' : tab === 'bookings' ? 'bookings' : tab === 'menu' ? 'menu' : 'analytics'}-container`);
+            const activeContainer = document.getElementById(`${tab === 'orders' ? 'orders' : tab === 'menu' ? 'menu' : 'analytics'}-container`);
             
             if (activeTabBtn) {
                 activeTabBtn.classList.remove('border-transparent', 'text-gray-500');
@@ -2638,20 +2704,29 @@
                 activeContainer.classList.remove('hidden');
             }
             
-            // Render content based on tab
+            // Update bottom navigation tabs
+            document.querySelectorAll('#bottom-tabs button').forEach(btn => {
+                btn.classList.remove('active-tab');
+            });
+            
             if (tab === 'orders') {
+                const ordersTab = document.getElementById('tab-orders');
+                if (ordersTab) ordersTab.classList.add('active-tab');
                 renderOrders();
-            } else if (tab === 'bookings') {
-                renderChefBookings();
             } else if (tab === 'menu') {
+                const homeTab = document.getElementById('tab-home');
+                if (homeTab) homeTab.classList.add('active-tab');
                 renderChefMenu();
             } else if (tab === 'analytics') {
+                const homeTab = document.getElementById('tab-home');
+                if (homeTab) homeTab.classList.add('active-tab');
                 renderAnalytics();
             }
         }
 
         function renderChefBookings() {
-            const container = document.getElementById('bookings-container');
+            // Check if we're on chef bookings screen or chef dashboard
+            const container = document.getElementById('chef-bookings-list') || document.getElementById('bookings-container');
             if (!container) return;
             
             // Get current logged in chef ID from localStorage
@@ -2732,7 +2807,7 @@
                             <div class="text-sm text-gray-500">
                                 <div>Booked: ${booking.bookedAt}</div>
                             </div>
-                            <span class="font-bold text-lg text-red-600">${booking.price}</span>
+                            <span class="font-bold text-lg text-red-600">${formatPriceToJOD(booking.price)}</span>
                         </div>
                         ${booking.status === 'pending' ? `
                             <div class="flex gap-2">
@@ -2874,10 +2949,10 @@
             
             const addToCartBtn = document.getElementById('add-to-cart-btn');
             if (addToCartBtn) {
-                addToCartBtn.textContent = `Add to Cart - ${dish.price}`;
-                addToCartBtn.onclick = function() {
-                    addToCart(dishId);
-                };
+            addToCartBtn.textContent = `Add to Cart - ${dish.price}`;
+            addToCartBtn.onclick = function() {
+                addToCart(dishId);
+            };
             }
             
             showScreen('dish-detail');
@@ -2904,10 +2979,10 @@
             
             if (totalExtraCharges > 0) {
                 if (priceDisplay) {
-                    priceDisplay.innerHTML = `
-                        <div class="text-2xl font-bold text-red-600">JOD ${totalPrice.toFixed(2)}</div>
-                        <div class="text-xs text-gray-500 mt-1">Base: ${dish.price} + Extra: ${totalExtraCharges.toFixed(2)} JOD</div>
-                    `;
+                priceDisplay.innerHTML = `
+                    <div class="text-2xl font-bold text-red-600">JOD ${totalPrice.toFixed(2)}</div>
+                    <div class="text-xs text-gray-500 mt-1">Base: ${dish.price} + Extra: ${totalExtraCharges.toFixed(2)} JOD</div>
+                `;
                 }
                 if (addToCartBtn) addToCartBtn.textContent = `Add to Cart - JOD ${totalPrice.toFixed(2)}`;
             } else {
@@ -3245,6 +3320,32 @@
             }
         }
 
+        function formatPriceToJOD(price) {
+            if (!price) return 'JOD 0.00';
+            
+            // If already in JOD format, return as is
+            if (typeof price === 'string' && price.includes('JOD')) {
+                return price;
+            }
+            
+            // If in USD/$ format, convert to JOD
+            if (typeof price === 'string' && (price.includes('$') || price.includes('USD'))) {
+                const numericValue = parseFloat(price.replace(/[^0-9.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    return `JOD ${numericValue.toFixed(2)}`;
+                }
+            }
+            
+            // If it's just a number, add JOD prefix
+            const numericValue = parseFloat(price);
+            if (!isNaN(numericValue)) {
+                return `JOD ${numericValue.toFixed(2)}`;
+            }
+            
+            // Fallback
+            return 'JOD 0.00';
+        }
+
         function formatCardNumber(input) {
             let value = input.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
             let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
@@ -3451,6 +3552,9 @@
                 ],
                 estimatedDelivery: new Date(Date.now() + 45 * 60 * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
             });
+            
+            // Save orders to localStorage to persist them
+            saveBookingsToStorage();
             
             // Clear Visa form if used
             if (selectedPaymentMethod === 'visa') {
@@ -3739,22 +3843,30 @@
         }
 
         function getStatusColor(status) {
-            switch(status) {
+            if (!status) return 'bg-gray-100 text-gray-700';
+            const normalizedStatus = status.toLowerCase();
+            switch(normalizedStatus) {
                 case 'pending': return 'bg-blue-100 text-blue-700';
                 case 'preparing': return 'bg-yellow-100 text-yellow-700';
                 case 'done': return 'bg-green-100 text-green-700';
+                case 'completed': return 'bg-green-100 text-green-700';
                 case 'canceled': return 'bg-red-100 text-red-700';
+                case 'cancelled': return 'bg-red-100 text-red-700';
                 default: return 'bg-gray-100 text-gray-700';
             }
         }
 
         function changeOrderStatus(orderId, newStatus) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                order.status = newStatus;
+            // Find order in both arrays
+            let orderInOrders = orders.find(o => o.id === orderId);
+            let myOrder = myOrders.find(o => o.id === orderId);
+            
+            // Update in orders array if exists
+            if (orderInOrders) {
+                orderInOrders.status = newStatus;
+            }
                 
                 // Update in myOrders array (customer's order list)
-                const myOrder = myOrders.find(o => o.id === orderId);
                 if (myOrder) {
                     myOrder.status = newStatus;
                     
@@ -3777,22 +3889,24 @@
                         existingEntry.timestamp = new Date().toISOString();
                         existingEntry.time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                         existingEntry.message = getStatusMessage(newStatus);
+                }
                     }
                     
-                    // Save to localStorage
-                    localStorage.setItem('myOrders', JSON.stringify(myOrders));
+            // If order exists in either array, save both arrays to localStorage to persist changes
+            if (orderInOrders || myOrder) {
+                saveBookingsToStorage();
                     
                     // If track order page is open for this order, re-render it
-                    if (currentTrackingOrderId === orderId) {
+                if (currentTrackingOrderId === orderId && myOrder) {
                         renderTrackOrder(myOrder);
                     }
                     
                     // If my-orders screen is open, refresh it
                     if (currentScreen === 'my-orders') {
                         renderMyOrders();
-                    }
                 }
                 
+                // Re-render chef orders
                 renderOrders();
                 updateChefStats();
             }
@@ -3801,61 +3915,92 @@
         function updateChefStats() {
             // Update chef dashboard name
             const loggedInUsername = localStorage.getItem('username');
-            if (loggedInUsername) {
+            if (!loggedInUsername) return;
+            
                 const loggedInChef = chefs.find(c => c.id === loggedInUsername);
-                if (loggedInChef) {
+            if (!loggedInChef) return;
+            
                     const nameEl = document.getElementById('chef-dashboard-name');
                     if (nameEl) {
                         nameEl.textContent = loggedInChef.kitchen;
                     }
-                }
-            }
             
-            const pendingCount = orders.filter(o => o.status === 'pending').length;
+            // Combine orders from both arrays
+            const allOrdersForStats = [...orders, ...myOrders];
+            const uniqueOrdersForStats = [];
+            const seenIdsForStats = new Set();
+            allOrdersForStats.forEach(o => {
+                if (!seenIdsForStats.has(o.id)) {
+                    seenIdsForStats.add(o.id);
+                    uniqueOrdersForStats.push(o);
+                }
+            });
+            
+            // Filter orders for this chef
+            const chefOrdersForStats = uniqueOrdersForStats.filter(o => {
+                if (o.items && Array.isArray(o.items)) {
+                    return o.items.some(item => {
+                        const dish = dishes.all.find(d => d.name === item.name);
+                        return dish && dish.chefId === loggedInChef.id;
+                    });
+                }
+                if (o.dish) {
+                    const dishNames = o.dish.split(',').map(d => d.trim().replace(/\sx\d+$/, ''));
+                    return dishNames.some(dishName => {
+                        const dish = dishes.all.find(d => d.name === dishName || d.name.startsWith(dishName));
+                        return dish && dish.chefId === loggedInChef.id;
+                    });
+                }
+                return false;
+            });
+            
+            const pendingCount = chefOrdersForStats.filter(o => (o.status || 'pending') === 'pending').length;
             const today = new Date().toLocaleDateString();
             
             // Calculate today's earnings (done and preparing orders from today)
-            const todayOrders = orders.filter(o => {
+            const todayOrders = chefOrdersForStats.filter(o => {
                 if (!o.date) return false;
-                return o.date === today && (o.status === 'done' || o.status === 'preparing');
+                const status = o.status || 'pending';
+                return o.date === today && (status === 'done' || status === 'preparing');
             });
             const todayEarnings = todayOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
             // Calculate week's orders (last 7 days, done and preparing)
             const weekAgo = new Date();
             weekAgo.setDate(weekAgo.getDate() - 7);
-            const weekOrders = orders.filter(o => {
+            const weekOrders = chefOrdersForStats.filter(o => {
                 if (!o.date) return false;
                 try {
                     const orderDate = new Date(o.date);
-                    return orderDate >= weekAgo && (o.status === 'done' || o.status === 'preparing');
+                    const status = o.status || 'pending';
+                    return orderDate >= weekAgo && (status === 'done' || status === 'preparing');
                 } catch {
                     return false;
                 }
             });
+            const weekEarnings = weekOrders.reduce((sum, o) => {
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
+                return sum + (isNaN(total) ? 0 : total);
+            }, 0);
             
             // Calculate month's earnings
             const monthAgo = new Date();
             monthAgo.setMonth(monthAgo.getMonth() - 1);
-            const monthOrders = orders.filter(o => {
+            const monthOrders = chefOrdersForStats.filter(o => {
                 if (!o.date) return false;
                 try {
                     const orderDate = new Date(o.date);
-                    return orderDate >= monthAgo && (o.status === 'done' || o.status === 'preparing');
+                    const status = o.status || 'pending';
+                    return orderDate >= monthAgo && (status === 'done' || status === 'preparing');
                 } catch {
                     return false;
                 }
             });
             const monthEarnings = monthOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
-                return sum + (isNaN(total) ? 0 : total);
-            }, 0);
-            
-            const weekEarnings = weekOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
@@ -3870,6 +4015,8 @@
             if (monthEl) monthEl.textContent = `JOD ${monthEarnings.toFixed(0)}`;
         }
 
+        let currentOrderFilter = 'all';
+
         function renderOrders() {
             const cont = document.getElementById('orders-container');
             if (!cont) return;
@@ -3881,35 +4028,123 @@
             const loggedInChef = chefs.find(c => c.id === loggedInUsername);
             if (!loggedInChef) return;
             
+            // Combine orders from both arrays and filter for this chef's dishes
+            const allOrders = [...orders, ...myOrders];
+            
+            // Remove duplicates by ID
+            const uniqueOrders = [];
+            const seenIds = new Set();
+            allOrders.forEach(o => {
+                if (!seenIds.has(o.id)) {
+                    seenIds.add(o.id);
+                    uniqueOrders.push(o);
+                }
+            });
+            
             // Filter orders for this chef's dishes
-            const chefOrders = orders.filter(o => {
-                if (!o.items) return false;
+            let chefOrders = uniqueOrders.filter(o => {
+                // Check if order has items array
+                if (o.items && Array.isArray(o.items)) {
                 return o.items.some(item => {
                     const dish = dishes.all.find(d => d.name === item.name);
                     return dish && dish.chefId === loggedInChef.id;
                 });
+                }
+                // Fallback: check dish string if items array doesn't exist
+                if (o.dish) {
+                    const dishNames = o.dish.split(',').map(d => d.trim().replace(/\sx\d+$/, ''));
+                    return dishNames.some(dishName => {
+                        const dish = dishes.all.find(d => d.name === dishName || d.name.startsWith(dishName));
+                        return dish && dish.chefId === loggedInChef.id;
+                    });
+                }
+                return false;
+            });
+            
+            // Apply status filter
+            if (currentOrderFilter !== 'all') {
+                chefOrders = chefOrders.filter(o => {
+                    const status = o.status || 'pending';
+                    if (currentOrderFilter === 'canceled') {
+                        return status === 'canceled' || status === 'cancelled';
+                    }
+                    return status === currentOrderFilter;
+                });
+            }
+            
+            // Sort by date (newest first)
+            chefOrders.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date) : new Date(0);
+                const dateB = b.date ? new Date(b.date) : new Date(0);
+                return dateB - dateA;
             });
             
             if (chefOrders.length === 0) {
                 cont.innerHTML = `
+                    <div class="mb-4 flex gap-2 overflow-x-auto pb-2">
+                        <button onclick="filterOrders('all')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'all' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                            All
+                        </button>
+                        <button onclick="filterOrders('pending')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'pending' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                            Pending
+                        </button>
+                        <button onclick="filterOrders('preparing')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'preparing' ? 'bg-yellow-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                            Preparing
+                        </button>
+                        <button onclick="filterOrders('done')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'done' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                            Completed
+                        </button>
+                        <button onclick="filterOrders('canceled')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'canceled' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                            Canceled
+                        </button>
+                    </div>
                     <div class="text-center py-12">
                         <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <p class="text-gray-500 text-lg mb-2">No orders yet</p>
-                        <p class="text-gray-400 text-sm">Customer orders will appear here</p>
+                        <p class="text-gray-500 text-lg mb-2">No orders found</p>
+                        <p class="text-gray-400 text-sm">${currentOrderFilter === 'all' ? 'Customer orders will appear here' : `No ${currentOrderFilter} orders`}</p>
                     </div>
                 `;
                 return;
             }
             
-            cont.innerHTML = chefOrders.map(o => {
+            cont.innerHTML = `
+                <div class="mb-4 flex gap-2 overflow-x-auto pb-2">
+                    <button onclick="filterOrders('all')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'all' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                        All (${uniqueOrders.filter(o => {
+                            if (o.items && Array.isArray(o.items)) {
+                                return o.items.some(item => {
+                                    const dish = dishes.all.find(d => d.name === item.name);
+                                    return dish && dish.chefId === loggedInChef.id;
+                                });
+                            }
+                            return false;
+                        }).length})
+                    </button>
+                    <button onclick="filterOrders('pending')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'pending' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                        Pending
+                    </button>
+                    <button onclick="filterOrders('preparing')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'preparing' ? 'bg-yellow-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                        Preparing
+                    </button>
+                    <button onclick="filterOrders('done')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'done' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                        Completed
+                    </button>
+                    <button onclick="filterOrders('canceled')" class="px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap ${currentOrderFilter === 'canceled' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+                        Canceled
+                    </button>
+                </div>
+                ${chefOrders.map(o => {
                 const statusColor = getStatusColor(o.status);
                 
                 // Build customizations display
                 let customizationsHtml = '';
-                if (o.items && o.items.length > 0) {
-                    const customizationsList = o.items.map(item => {
+                    const orderItems = o.items || [];
+                    const orderDish = o.dish || '';
+                    
+                    if (orderItems.length > 0) {
+                        const customizationsList = orderItems.map(item => {
                         if (!item.customizations) return '';
                         
                         const cust = item.customizations;
@@ -3935,42 +4170,66 @@
                         customizationsHtml = `<div class="mt-3 pt-3 border-t"><p class="text-xs font-semibold text-gray-700 mb-2">Customizations:</p>${customizationsList}</div>`;
                     }
                 }
+                    
+                    // Get order display info
+                    const displayDish = orderItems.length > 0 
+                        ? orderItems.map(item => `${item.name} x${item.quantity}`).join(', ')
+                        : orderDish;
+                    const displayCustomer = o.customer || 'Customer';
+                    const displayTotal = o.total || 'JOD 0.00';
+                    const displayTime = o.time || '';
+                    const displayDate = o.date || '';
+                    const orderStatus = o.status || 'pending';
+                    const isCompleted = orderStatus === 'done';
+                    const isCanceled = orderStatus === 'canceled' || orderStatus === 'cancelled';
                 
                 return `
                     <div class="bg-white rounded-lg shadow p-4 mb-4">
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex-1">
                                 <h3 class="font-semibold text-lg">#${o.id}</h3>
-                                <p class="text-sm text-gray-500 mt-1">${o.customer}</p>
-                                <p class="text-sm text-gray-700 mt-2 font-medium">${o.dish}</p>
+                                    <p class="text-sm text-gray-500 mt-1">${displayCustomer}</p>
+                                    <p class="text-sm text-gray-700 mt-2 font-medium">${displayDish}</p>
                             </div>
-                            <span class="px-3 py-1 ${statusColor} rounded-full text-xs font-semibold whitespace-nowrap">${o.status}</span>
+                                <span class="px-3 py-1 ${statusColor} rounded-full text-xs font-semibold whitespace-nowrap capitalize">${orderStatus}</span>
                         </div>
                         ${customizationsHtml}
                         <div class="flex justify-between items-center mb-3 pb-3 border-b mt-3">
                             <div class="text-sm text-gray-500">
-                                <div>${o.time}</div>
-                                <div class="mt-1">${o.date}</div>
+                                    ${displayTime ? `<div>${displayTime}</div>` : ''}
+                                    ${displayDate ? `<div class="mt-1">${displayDate}</div>` : ''}
                             </div>
-                            <span class="font-bold text-lg text-red-600">${o.total}</span>
+                                <span class="font-bold text-lg text-red-600">${displayTotal}</span>
                         </div>
+                            ${!isCompleted && !isCanceled ? `
                         <div class="flex flex-wrap gap-2">
-                            <button onclick="changeOrderStatus('${o.id}', 'pending')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${o.status === 'pending' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'} transition">
+                                <button onclick="changeOrderStatus('${o.id}', 'pending')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${orderStatus === 'pending' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'} transition">
                                 Pending
                             </button>
-                            <button onclick="changeOrderStatus('${o.id}', 'preparing')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${o.status === 'preparing' ? 'bg-yellow-500 text-white border-yellow-500' : 'bg-white text-yellow-600 border-yellow-300 hover:bg-yellow-50'} transition">
+                                <button onclick="changeOrderStatus('${o.id}', 'preparing')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${orderStatus === 'preparing' ? 'bg-yellow-500 text-white border-yellow-500' : 'bg-white text-yellow-600 border-yellow-300 hover:bg-yellow-50'} transition">
                                 Preparing
                             </button>
-                            <button onclick="changeOrderStatus('${o.id}', 'done')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${o.status === 'done' ? 'bg-green-500 text-white border-green-500' : 'bg-white text-green-600 border-green-300 hover:bg-green-50'} transition">
+                                <button onclick="changeOrderStatus('${o.id}', 'done')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${orderStatus === 'done' ? 'bg-green-500 text-white border-green-500' : 'bg-white text-green-600 border-green-300 hover:bg-green-50'} transition">
                                 Done
                             </button>
-                            <button onclick="changeOrderStatus('${o.id}', 'canceled')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${o.status === 'canceled' ? 'bg-red-500 text-white border-red-500' : 'bg-white text-red-600 border-red-300 hover:bg-red-50'} transition">
-                                Canceled
+                                <button onclick="changeOrderStatus('${o.id}', 'canceled')" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg border-2 ${isCanceled ? 'bg-red-500 text-white border-red-500' : 'bg-white text-red-600 border-red-300 hover:bg-red-50'} transition">
+                                    Cancel
                             </button>
                         </div>
+                            ` : `
+                            <div class="text-sm text-gray-500 italic text-center py-2">
+                                ${isCompleted ? 'Order completed' : 'Order canceled'}
+                            </div>
+                            `}
                     </div>
                 `;
-            }).join('');
+                }).join('')}
+            `;
+        }
+        
+        function filterOrders(status) {
+            currentOrderFilter = status;
+            renderOrders();
         }
 
         function filterContent(cat) {
@@ -4045,13 +4304,48 @@
                 } else if (id === 'my-bookings') {
                     renderMyBookings();
                 } else if (id === 'favorites-screen') {
+                    const userType = localStorage.getItem('userType');
+                    if (userType === 'chef') {
+                        renderFavoritesForChef();
+                    } else {
                     renderFavorites();
+                    }
+                } else if (id === 'chef-bookings-screen') {
+                    renderChefBookings();
+                    // Update active tab in bottom navigation
+                    const userType = localStorage.getItem('userType');
+                    if (userType === 'chef') {
+                        document.querySelectorAll('#bottom-tabs button').forEach(btn => {
+                            btn.classList.remove('active-tab');
+                        });
+                        const bookingsTab = document.getElementById('tab-bookings');
+                        if (bookingsTab) bookingsTab.classList.add('active-tab');
+                    }
                 } else if (id === 'profile-screen') {
                     renderProfile();
+                    // Update active tab in bottom navigation
+                    const userType = localStorage.getItem('userType');
+                    if (userType === 'chef') {
+                        document.querySelectorAll('#bottom-tabs button').forEach(btn => {
+                            btn.classList.remove('active-tab');
+                        });
+                        const profileTab = document.getElementById('tab-profile');
+                        if (profileTab) profileTab.classList.add('active-tab');
+                    }
                 } else if (id === 'chef-dashboard') {
                     renderOrders();
                     updateChefStats();
                     showChefTab(currentChefTab || 'orders');
+                    // Update active tab in bottom navigation for chefs
+                    const userType = localStorage.getItem('userType');
+                    if (userType === 'chef') {
+                        document.querySelectorAll('#bottom-tabs button').forEach(btn => {
+                            btn.classList.remove('active-tab');
+                        });
+                        const activeTabId = currentChefTab === 'orders' ? 'tab-orders' : 'tab-home';
+                        const activeTab = document.getElementById(activeTabId);
+                        if (activeTab) activeTab.classList.add('active-tab');
+                    }
                 } else if (id === 'admin-dashboard') {
                     renderAdminDashboard();
                 } else if (id === 'book-chef') {
@@ -4103,29 +4397,38 @@
                     showScreen(tabMap[tab].screen);
                 }
             } else if (userType === 'chef') {
-                // For chefs, home tab goes to chef dashboard
+                // Reset all tab buttons
+                document.querySelectorAll('#bottom-tabs button').forEach(btn => {
+                    btn.classList.remove('active-tab');
+                });
+                
+                // Chef tab navigation
                 if (tab === 'home') {
+                    const homeTab = document.getElementById('tab-home');
+                    if (homeTab) homeTab.classList.add('active-tab');
                     showScreen('chef-dashboard');
-                } else {
-                    // Other tabs can still work for chefs if needed
-                    const tabMap = {
-                        'home': { screen: 'chef-dashboard', tabId: 'tab-home' },
-                        'orders': { screen: 'chef-dashboard', tabId: 'tab-orders' },
-                        'profile': { screen: 'profile-screen', tabId: 'tab-profile' }
-                    };
-                    
-                    if (tabMap[tab]) {
-                        const activeTabBtn = document.getElementById(tabMap[tab].tabId);
-                        if (activeTabBtn) {
-                            activeTabBtn.classList.add('active-tab');
-                        }
-                        if (tab === 'orders') {
+                    showChefTab('orders');
+                } else if (tab === 'orders') {
+                    const ordersTab = document.getElementById('tab-orders');
+                    if (ordersTab) ordersTab.classList.add('active-tab');
                             showScreen('chef-dashboard');
                             showChefTab('orders');
-                        } else {
-                            showScreen(tabMap[tab].screen);
-                        }
-                    }
+                } else if (tab === 'bookings') {
+                    const bookingsTab = document.getElementById('tab-bookings');
+                    if (bookingsTab) bookingsTab.classList.add('active-tab');
+                    showScreen('chef-bookings-screen');
+                    renderChefBookings();
+                } else if (tab === 'profile') {
+                    const profileTab = document.getElementById('tab-profile');
+                    if (profileTab) profileTab.classList.add('active-tab');
+                    showScreen('profile-screen');
+                    renderProfile();
+                } else if (tab === 'favorites') {
+                    // Chefs don't have favorites, show message or redirect to home
+                    const favoritesTab = document.getElementById('tab-favorites');
+                    if (favoritesTab) favoritesTab.classList.add('active-tab');
+                    showScreen('favorites-screen');
+                    renderFavoritesForChef();
                 }
             }
         }
@@ -4252,6 +4555,24 @@
             }
         }
 
+        function renderFavoritesForChef() {
+            const list = document.getElementById('favorites-list');
+            if (!list) return;
+            
+            list.innerHTML = `
+                <div class="col-span-2 text-center py-16">
+                    <svg class="w-20 h-20 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Favorites Not Available</h3>
+                    <p class="text-gray-500 mb-6">Chefs don't have favorites. This feature is for customers only.</p>
+                    <button onclick="navigateToTab('home')" class="btn-primary text-white px-6 py-2 rounded-lg font-semibold">
+                        Go to Dashboard
+                    </button>
+                </div>
+            `;
+        }
+
         function renderFavorites() {
             const list = document.getElementById('favorites-list');
             if (!list) return;
@@ -4311,16 +4632,107 @@
         // Profile Functionality
         function renderProfile() {
             const username = localStorage.getItem('username');
+            const userType = localStorage.getItem('userType');
+            
             if (username) {
                 const nameEl = document.getElementById('profile-name');
                 const initialEl = document.getElementById('profile-initial');
+                const emailEl = document.getElementById('profile-email');
+                
+                // For chefs, get their chef name
+                if (userType === 'chef') {
+                    const chef = chefs.find(c => c.id === username);
+                    if (chef) {
+                        if (nameEl) nameEl.textContent = chef.name;
+                        if (initialEl) initialEl.textContent = chef.name.charAt(0).toUpperCase();
+                        if (emailEl) emailEl.textContent = 'Chef';
+                    } else {
                 if (nameEl) nameEl.textContent = username.charAt(0).toUpperCase() + username.slice(1);
                 if (initialEl) initialEl.textContent = username.charAt(0).toUpperCase();
+                        if (emailEl) emailEl.textContent = 'Chef';
+                    }
+                } else {
+                    if (nameEl) nameEl.textContent = username.charAt(0).toUpperCase() + username.slice(1);
+                    if (initialEl) initialEl.textContent = username.charAt(0).toUpperCase();
+                    if (emailEl) emailEl.textContent = 'Customer';
+                }
             }
             
+            // For chefs, show different stats
+            if (userType === 'chef') {
+                const loggedInChef = chefs.find(c => c.id === username);
+                if (loggedInChef) {
+                    // Combine orders from both arrays for chef
+                    const allOrdersForProfile = [...orders, ...myOrders];
+                    const uniqueOrdersForProfile = [];
+                    const seenIdsForProfile = new Set();
+                    allOrdersForProfile.forEach(o => {
+                        if (!seenIdsForProfile.has(o.id)) {
+                            seenIdsForProfile.add(o.id);
+                            uniqueOrdersForProfile.push(o);
+                        }
+                    });
+                    
+                    // Filter orders for this chef
+                    const chefOrdersForProfile = uniqueOrdersForProfile.filter(o => {
+                        if (o.items && Array.isArray(o.items)) {
+                            return o.items.some(item => {
+                                const dish = dishes.all.find(d => d.name === item.name);
+                                return dish && dish.chefId === loggedInChef.id;
+                            });
+                        }
+                        if (o.dish) {
+                            const dishNames = o.dish.split(',').map(d => d.trim().replace(/\sx\d+$/, ''));
+                            return dishNames.some(dishName => {
+                                const dish = dishes.all.find(d => d.name === dishName || d.name.startsWith(dishName));
+                                return dish && dish.chefId === loggedInChef.id;
+                            });
+                        }
+                        return false;
+                    });
+                    
+                    const totalOrders = chefOrdersForProfile.length;
+                    const totalEarnings = chefOrdersForProfile
+                        .filter(o => o.status === 'done' || o.status === 'preparing')
+                        .reduce((sum, order) => {
+                            const total = parseFloat((order.total || 'JOD 0').replace('JOD ', ''));
+                            return sum + (isNaN(total) ? 0 : total);
+                        }, 0);
+                    
+                    const totalOrdersEl = document.getElementById('profile-total-orders');
+                    const totalSpentEl = document.getElementById('profile-total-spent');
+                    const favoritesCountEl = document.getElementById('profile-favorites-count');
+                    const bookingsCountEl = document.getElementById('profile-bookings-count');
+                    
+                    if (totalOrdersEl) totalOrdersEl.textContent = totalOrders;
+                    if (totalSpentEl) {
+                        totalSpentEl.textContent = `JOD ${totalEarnings.toFixed(2)}`;
+                    }
+                    // Update "Total Spent" label to "Total Earnings" for chefs
+                    const totalSpentRow = totalSpentEl?.closest('.flex.justify-between');
+                    if (totalSpentRow) {
+                        const labelEl = totalSpentRow.querySelector('.text-gray-600');
+                        if (labelEl && labelEl.textContent.includes('Total Spent')) {
+                            labelEl.textContent = 'Total Earnings';
+                        }
+                    }
+                    // Hide favorites row for chefs
+                    if (favoritesCountEl) {
+                        const favoritesRow = favoritesCountEl.closest('.flex.justify-between');
+                        if (favoritesRow) {
+                            favoritesRow.style.display = 'none';
+                        }
+                    }
+                    if (bookingsCountEl) {
+                        const chefBookings = allChefBookings.filter(b => b.chefId === loggedInChef.id);
+                        bookingsCountEl.textContent = chefBookings.length;
+                    }
+                }
+            } else {
+                // Customer profile stats
             const totalOrders = myOrders.length;
             const totalSpent = myOrders.reduce((sum, order) => {
-                const total = parseFloat(order.total.replace('JOD ', ''));
+                    const total = parseFloat((order.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
@@ -4328,12 +4740,12 @@
             const totalSpentEl = document.getElementById('profile-total-spent');
             const favoritesCountEl = document.getElementById('profile-favorites-count');
             const bookingsCountEl = document.getElementById('profile-bookings-count');
-            const savedCardsEl = document.getElementById('profile-saved-cards');
             
             if (totalOrdersEl) totalOrdersEl.textContent = totalOrders;
             if (totalSpentEl) totalSpentEl.textContent = `JOD ${totalSpent.toFixed(2)}`;
             if (favoritesCountEl) favoritesCountEl.textContent = favorites.length;
             if (bookingsCountEl) bookingsCountEl.textContent = myBookings.length;
+            }
             
             const savedProfile = localStorage.getItem('userProfile');
             if (savedProfile) {
@@ -4346,7 +4758,14 @@
                 } catch (e) {}
             }
             
-            // Render saved cards
+            // Hide saved cards section for chefs, show for customers
+            const savedCardsSection = document.querySelector('#profile-screen .bg-white.rounded-lg.shadow:last-of-type');
+            if (savedCardsSection && savedCardsSection.querySelector('#profile-saved-cards')) {
+                if (userType === 'chef') {
+                    savedCardsSection.style.display = 'none';
+                } else {
+                    savedCardsSection.style.display = 'block';
+                    const savedCardsEl = document.getElementById('profile-saved-cards');
             if (savedCardsEl) {
                 loadSavedCards();
                 if (savedCards.length > 0) {
@@ -4361,12 +4780,20 @@
                                     <div class="text-xs text-gray-500">${card.maskedCardNumber || '**** **** **** ' + card.cardNumber.slice(-4)}</div>
                                 </div>
                             </div>
+                                    <button onclick="deleteSavedCard(${savedCards.indexOf(card)})" class="text-red-500 hover:text-red-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
                         </div>
                     `).join('');
                 } else {
                     savedCardsEl.innerHTML = '<p class="text-sm text-gray-500 text-center py-4">No saved cards</p>';
+                        }
                 }
             }
+            }
+            
         }
 
         function saveProfile() {
@@ -4382,23 +4809,23 @@
                 'Are you sure you want to cancel this order?',
                 'Cancel Order',
                 () => {
-                    const order = myOrders.find(o => o.id === orderId);
-                    if (order && order.status !== 'done' && order.status !== 'canceled') {
-                        order.status = 'canceled';
-                        
-                        // Update in orders array too
-                        const chefOrder = orders.find(o => o.id === orderId);
-                        if (chefOrder) {
-                            chefOrder.status = 'canceled';
-                        }
-                        
-                        saveBookingsToStorage();
-                        renderMyOrders();
-                        showCustomAlert('Order canceled successfully', 'Order Canceled', 'success');
-                    } else {
-                        showCustomAlert('This order cannot be canceled', 'Error', 'error');
+                const order = myOrders.find(o => o.id === orderId);
+                if (order && order.status !== 'done' && order.status !== 'canceled') {
+                    order.status = 'canceled';
+                    
+                    // Update in orders array too
+                    const chefOrder = orders.find(o => o.id === orderId);
+                    if (chefOrder) {
+                        chefOrder.status = 'canceled';
                     }
+                    
+                    saveBookingsToStorage();
+                    renderMyOrders();
+                    showCustomAlert('Order canceled successfully', 'Order Canceled', 'success');
+                } else {
+                    showCustomAlert('This order cannot be canceled', 'Error', 'error');
                 }
+            }
             );
         }
 
@@ -4495,7 +4922,46 @@
             `).join('');
         }
 
+        function handleDishFormSubmit() {
+            const userType = localStorage.getItem('userType');
+            if (userType === 'admin') {
+                if (currentEditingDishId) {
+                    updateDishAdmin(currentEditingDishId);
+                } else {
+                    saveNewDishAdmin();
+                }
+            } else if (userType === 'chef') {
+                if (currentEditingDishId) {
+                    updateDish(currentEditingDishId);
+                } else {
+                    saveNewDish();
+                }
+            }
+        }
+
         function showAddDishModal() {
+            // Reset form and editing state if opening for new dish
+            if (!currentEditingDishId) {
+                const modalTitle = document.getElementById('dish-modal-title');
+                if (modalTitle) modalTitle.textContent = 'Add New Dish';
+                
+                const submitBtn = document.getElementById('dish-modal-submit');
+                if (submitBtn) submitBtn.textContent = 'Add Dish';
+                
+                // Clear form fields
+                const nameEl = document.getElementById('new-dish-name');
+                const priceEl = document.getElementById('new-dish-price');
+                const categoryEl = document.getElementById('new-dish-category');
+                const imageEl = document.getElementById('new-dish-image');
+                const ratingEl = document.getElementById('new-dish-rating');
+                
+                if (nameEl) nameEl.value = '';
+                if (priceEl) priceEl.value = '';
+                if (categoryEl) categoryEl.value = 'middle-eastern';
+                if (imageEl) imageEl.value = '';
+                if (ratingEl) ratingEl.value = '4.5';
+            }
+            
             document.getElementById('add-dish-modal').classList.remove('hidden');
             document.getElementById('add-dish-modal').style.display = 'flex';
         }
@@ -4557,43 +5023,105 @@
 
         function editDish(dishId) {
             const dish = dishes.all.find(d => d.id === dishId);
-            if (!dish) return;
+            if (!dish) {
+                showCustomAlert('Dish not found', 'Error', 'error');
+                return;
+            }
             
-            document.getElementById('new-dish-name').value = dish.name;
-            document.getElementById('new-dish-price').value = dish.price.replace('JOD ', '');
-            document.getElementById('new-dish-category').value = dish.category;
-            document.getElementById('new-dish-image').value = dish.image;
-            document.getElementById('new-dish-rating').value = dish.rating;
+            // Set current editing dish ID
+            currentEditingDishId = dishId;
             
-            // Change button text
-            const submitBtn = document.querySelector('#add-dish-modal button[type="submit"]');
-            submitBtn.textContent = 'Update Dish';
-            submitBtn.onclick = function(e) {
-                e.preventDefault();
-                updateDish(dishId);
-            };
+            // Populate form fields
+            const nameEl = document.getElementById('new-dish-name');
+            const priceEl = document.getElementById('new-dish-price');
+            const categoryEl = document.getElementById('new-dish-category');
+            const imageEl = document.getElementById('new-dish-image');
+            const ratingEl = document.getElementById('new-dish-rating');
             
+            if (nameEl) nameEl.value = dish.name;
+            if (priceEl) priceEl.value = dish.price.replace('JOD ', '');
+            if (categoryEl) categoryEl.value = dish.category;
+            if (imageEl) imageEl.value = dish.image;
+            if (ratingEl) ratingEl.value = dish.rating;
+            
+            // Update modal title
+            const modalTitle = document.getElementById('dish-modal-title');
+            if (modalTitle) modalTitle.textContent = 'Edit Dish';
+            
+            // Update submit button text
+            const submitBtn = document.getElementById('dish-modal-submit');
+            if (submitBtn) submitBtn.textContent = 'Update Dish';
+            
+            // Show the modal
             showAddDishModal();
         }
 
         function updateDish(dishId) {
             const dish = dishes.all.find(d => d.id === dishId);
-            if (!dish) return;
+            if (!dish) {
+                showCustomAlert('Dish not found', 'Error', 'error');
+                return;
+            }
             
-            dish.name = document.getElementById('new-dish-name').value.trim();
-            dish.price = `JOD ${parseFloat(document.getElementById('new-dish-price').value).toFixed(2)}`;
-            dish.category = document.getElementById('new-dish-category').value;
-            dish.image = document.getElementById('new-dish-image').value.trim() || dish.image;
-            dish.rating = document.getElementById('new-dish-rating').value;
+            const nameEl = document.getElementById('new-dish-name');
+            const priceEl = document.getElementById('new-dish-price');
+            const categoryEl = document.getElementById('new-dish-category');
+            const imageEl = document.getElementById('new-dish-image');
+            const ratingEl = document.getElementById('new-dish-rating');
             
-            // Update in category array
-            const categoryArray = dishes[dish.category];
-            if (categoryArray) {
-                const catIndex = categoryArray.findIndex(d => d.id === dishId);
-                if (catIndex > -1) {
-                    categoryArray[catIndex] = dish;
+            if (!nameEl || !priceEl || !categoryEl || !ratingEl) {
+                showCustomAlert('Form fields not found', 'Error', 'error');
+                return;
+            }
+            
+            const name = nameEl.value.trim();
+            const price = parseFloat(priceEl.value);
+            const category = categoryEl.value;
+            const image = imageEl.value.trim() || dish.image;
+            const rating = ratingEl.value;
+            
+            if (!name || isNaN(price) || price <= 0) {
+                showCustomAlert('Please fill in all required fields with valid values', 'Validation Error', 'error');
+                return;
+            }
+            
+            // Store old category for updating category arrays
+            const oldCategory = dish.category;
+            
+            // Update dish properties
+            dish.name = name;
+            dish.price = `JOD ${price.toFixed(2)}`;
+            dish.category = category;
+            dish.image = image;
+            dish.rating = rating;
+            
+            // Remove from old category array if category changed
+            if (oldCategory !== category && dishes[oldCategory]) {
+                const oldCatIndex = dishes[oldCategory].findIndex(d => d.id === dishId);
+                if (oldCatIndex > -1) {
+                    dishes[oldCategory].splice(oldCatIndex, 1);
                 }
             }
+            
+            // Add to new category array
+            if (dishes[category]) {
+                const catIndex = dishes[category].findIndex(d => d.id === dishId);
+                if (catIndex > -1) {
+                    dishes[category][catIndex] = dish;
+                } else {
+                    dishes[category].push(dish);
+                }
+            }
+            
+            // Clear editing state
+            currentEditingDishId = null;
+            
+            // Reset form
+            const modalTitle = document.getElementById('dish-modal-title');
+            if (modalTitle) modalTitle.textContent = 'Add New Dish';
+            
+            const submitBtn = document.getElementById('dish-modal-submit');
+            if (submitBtn) submitBtn.textContent = 'Add Dish';
             
             closeAddDishModal();
             renderChefMenu();
@@ -4605,15 +5133,15 @@
                 'Are you sure you want to delete this dish?',
                 'Delete Dish',
                 () => {
-                    dishes.all = dishes.all.filter(d => d.id !== dishId);
-                    Object.keys(dishes).forEach(key => {
-                        if (Array.isArray(dishes[key])) {
-                            dishes[key] = dishes[key].filter(d => d.id !== dishId);
-                        }
-                    });
-                    renderChefMenu();
-                    showCustomAlert('Dish deleted successfully!', 'Success', 'success');
-                }
+                dishes.all = dishes.all.filter(d => d.id !== dishId);
+                Object.keys(dishes).forEach(key => {
+                    if (Array.isArray(dishes[key])) {
+                        dishes[key] = dishes[key].filter(d => d.id !== dishId);
+                    }
+                });
+                renderChefMenu();
+                showCustomAlert('Dish deleted successfully!', 'Success', 'success');
+            }
             );
         }
 
@@ -4622,31 +5150,67 @@
             const loggedInUsername = localStorage.getItem('username');
             if (!loggedInUsername) return;
             
-            const chefOrders = orders.filter(o => {
-                if (!o.items) return false;
-                return o.items.some(item => {
-                    const dish = dishes.all.find(d => d.name === item.name);
-                    return dish && dish.chefId === loggedInUsername;
-                });
+            const loggedInChef = chefs.find(c => c.id === loggedInUsername);
+            if (!loggedInChef) return;
+            
+            // Combine orders from both arrays
+            const allOrdersForAnalytics = [...orders, ...myOrders];
+            const uniqueOrdersForAnalytics = [];
+            const seenIdsForAnalytics = new Set();
+            allOrdersForAnalytics.forEach(o => {
+                if (!seenIdsForAnalytics.has(o.id)) {
+                    seenIdsForAnalytics.add(o.id);
+                    uniqueOrdersForAnalytics.push(o);
+                }
             });
             
-            // Calculate today's earnings
+            // Filter orders for this chef
+            const chefOrders = uniqueOrdersForAnalytics.filter(o => {
+                // Check if order has items array
+                if (o.items && Array.isArray(o.items)) {
+                return o.items.some(item => {
+                    const dish = dishes.all.find(d => d.name === item.name);
+                        return dish && dish.chefId === loggedInChef.id;
+                    });
+                }
+                // Fallback: check dish string if items array doesn't exist
+                if (o.dish) {
+                    const dishNames = o.dish.split(',').map(d => d.trim().replace(/\sx\d+$/, ''));
+                    return dishNames.some(dishName => {
+                        const dish = dishes.all.find(d => d.name === dishName || d.name.startsWith(dishName));
+                        return dish && dish.chefId === loggedInChef.id;
+                    });
+                }
+                return false;
+            });
+            
+            // Calculate today's earnings (done and preparing orders from today)
             const today = new Date().toLocaleDateString();
-            const todayOrders = chefOrders.filter(o => o.date === today && o.status === 'done');
+            const todayOrders = chefOrders.filter(o => {
+                if (!o.date) return false;
+                const status = o.status || 'pending';
+                return o.date === today && (status === 'done' || status === 'preparing');
+            });
             const todayEarnings = todayOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
-            // Calculate week's earnings
+            // Calculate week's earnings (last 7 days, done and preparing)
             const weekAgo = new Date();
             weekAgo.setDate(weekAgo.getDate() - 7);
             const weekOrders = chefOrders.filter(o => {
+                if (!o.date) return false;
+                try {
                 const orderDate = new Date(o.date);
-                return orderDate >= weekAgo && o.status === 'done';
+                    const status = o.status || 'pending';
+                    return orderDate >= weekAgo && (status === 'done' || status === 'preparing');
+                } catch {
+                    return false;
+                }
             });
             const weekEarnings = weekOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
@@ -4654,32 +5218,56 @@
             const monthAgo = new Date();
             monthAgo.setMonth(monthAgo.getMonth() - 1);
             const monthOrders = chefOrders.filter(o => {
+                if (!o.date) return false;
+                try {
                 const orderDate = new Date(o.date);
-                return orderDate >= monthAgo && o.status === 'done';
+                    const status = o.status || 'pending';
+                    return orderDate >= monthAgo && (status === 'done' || status === 'preparing');
+                } catch {
+                    return false;
+                }
             });
             const monthEarnings = monthOrders.reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
-            // Total earnings
-            const totalEarnings = chefOrders.filter(o => o.status === 'done').reduce((sum, o) => {
-                const total = parseFloat(o.total.replace('JOD ', ''));
+            // Total earnings (all done and preparing orders)
+            const totalEarnings = chefOrders.filter(o => {
+                const status = o.status || 'pending';
+                return status === 'done' || status === 'preparing';
+            }).reduce((sum, o) => {
+                const total = parseFloat((o.total || 'JOD 0').replace('JOD ', ''));
                 return sum + (isNaN(total) ? 0 : total);
             }, 0);
             
             // Statistics
-            const completedOrders = chefOrders.filter(o => o.status === 'done').length;
+            const completedOrders = chefOrders.filter(o => (o.status || 'pending') === 'done').length;
             const avgOrderValue = completedOrders > 0 ? totalEarnings / completedOrders : 0;
             
             // Most popular dish
             const dishCounts = {};
             chefOrders.forEach(order => {
-                if (order.items) {
+                if (order.items && Array.isArray(order.items)) {
                     order.items.forEach(item => {
                         const dish = dishes.all.find(d => d.name === item.name);
-                        if (dish && dish.chefId === loggedInUsername) {
-                            dishCounts[item.name] = (dishCounts[item.name] || 0) + item.quantity;
+                        if (dish && dish.chefId === loggedInChef.id) {
+                            dishCounts[item.name] = (dishCounts[item.name] || 0) + (item.quantity || 1);
+                        }
+                    });
+                } else if (order.dish) {
+                    // Fallback for orders with dish string
+                    const dishNames = order.dish.split(',').map(d => {
+                        const match = d.trim().match(/(.+?)\s*x(\d+)/);
+                        if (match) {
+                            return { name: match[1].trim(), quantity: parseInt(match[2]) || 1 };
+                        }
+                        return { name: d.trim().replace(/\sx\d+$/, ''), quantity: 1 };
+                    });
+                    dishNames.forEach(({ name, quantity }) => {
+                        const dish = dishes.all.find(d => d.name === name || d.name.startsWith(name));
+                        if (dish && dish.chefId === loggedInChef.id) {
+                            dishCounts[dish.name] = (dishCounts[dish.name] || 0) + quantity;
                         }
                     });
                 }
@@ -4688,7 +5276,10 @@
                 ? Object.keys(dishCounts).reduce((a, b) => dishCounts[a] > dishCounts[b] ? a : b)
                 : '-';
             
-            const pendingOrders = chefOrders.filter(o => o.status === 'pending' || o.status === 'preparing').length;
+            const pendingOrders = chefOrders.filter(o => {
+                const status = o.status || 'pending';
+                return status === 'pending' || status === 'preparing';
+            }).length;
             const popularCount = popularDish !== '-' ? dishCounts[popularDish] : 0;
             
             const todayEl = document.getElementById('analytics-today');
@@ -5131,18 +5722,18 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-100">
                                 ${dishes.all.map((dish, index) => {
-                                    const addCount = (dish.customIngredients?.add || []).length;
-                                    const removeCount = (dish.customIngredients?.remove || []).length;
-                                    return `
+                        const addCount = (dish.customIngredients?.add || []).length;
+                        const removeCount = (dish.customIngredients?.remove || []).length;
+                        return `
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-4 py-3">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                                                     <img src="${dish.image}" class="w-full h-full object-cover" alt="${dish.name}">
-                                                </div>
+                                            </div>
                                                 <div class="min-w-0">
                                                     <div class="font-medium text-sm text-gray-900 truncate">${dish.name}</div>
-                                                </div>
+                                            </div>
                                             </div>
                                         </td>
                                         <td class="px-4 py-3">
@@ -5183,25 +5774,25 @@
                                                 ${addCount === 0 && removeCount === 0 ? `
                                                 <span class="text-xs text-gray-400">—</span>
                                                 ` : ''}
-                                            </div>
+                                                </div>
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center justify-end gap-1.5">
                                                 <button onclick="editDishAdmin(${dish.id})" class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Edit">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                    </svg>
-                                                </button>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </button>
                                                 <button onclick="deleteDishAdmin(${dish.id})" class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Delete">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </div>
                                         </td>
                                     </tr>
-                                `;
-                                }).join('')}
+                    `;
+                    }).join('')}
                             </tbody>
                         </table>
                     </div>
